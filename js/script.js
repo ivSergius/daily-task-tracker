@@ -58,6 +58,15 @@ $(document).ready(function() {
         $("#download_csv").attr("href", "export.php?data=" + encodeURIComponent(csvOut));
     }
 
+    function pad(num, size) {
+        var s = "000000000" + num;
+        return s.substr(s.length-size);
+    }
+
+    function intHourToStr(intHour) {
+        return pad(Math.trunc(intHour),2)+":"+ pad(Math.trunc((intHour-Math.trunc(intHour))*60),2);
+    }
+
     // Create some table columns
     (function createFirstRow() {
         var td = increment.html(), html = "";
@@ -114,20 +123,26 @@ $(document).ready(function() {
                         el.text(jsonData[i].value);
                         el.addClass(hv);
                     }
-                } else {
+                } else
+                 if (jsonData[i].value&&jsonData[i].value=="on"){
                     el.attr("checked", "checked");
+                    el.val("on");
                     el.prev().addClass("active");
-                }
+                 } else {
+                     el.attr("checked", "checked");
+                     el.val("on-half");
+                     el.prev().addClass("active-half");
+                 }
             }
-            // Updates task time total
+
             var task_total;
             $("tbody tr").each(function() {
-                task_total = $(this).find("input:checked").length * 0.25;
-                $(this).find(".task_total").text(task_total);
+                task_total = $(this).find(".active").length * 0.25 + $(this).find(".active-half").length * 0.125;
+                $(this).find(".task_total").text(intHourToStr(task_total));
             });
             // Update daily time totals
-            var day_total  = $("body").find("input:checked").length * 0.25;
-            $("#day_total").text(day_total);
+            var day_total  = $("body").find(".active").length * 0.25 + $("body").find(".active-half").length * 0.125;
+            $("#day_total").text(intHourToStr(day_total));
             // Load CSV Content
             generateCSV();
         }
@@ -143,10 +158,20 @@ $(document).ready(function() {
             function checkOrUncheck(l, i) {
                 if (l.hasClass("active")) {
                     l.removeClass("active");
+                    l.addClass("active-half");
+                    i.val("on-half");
+                    //i.removeAttr("checked");
+                } else
+                if (l.hasClass("active-half")) {
+                    l.removeClass("active-half");
                     i.removeAttr("checked");
-                } else {
+                    i.val("");
+                }
+                else
+                {
                     l.addClass("active");
                     i.attr("checked", "checked");
+                    i.val("on");
                 }
             }
 
@@ -154,14 +179,14 @@ $(document).ready(function() {
             checkOrUncheck(thisLabel, thisInput);
 
             var parent     = $(this).parents("tr"),
-                task_total = parent.find("input:checked").length * 0.25,
-                day_total  = $("body").find("input:checked").length * 0.25;
+                task_total = parent.find(".active").length * 0.25 + parent.find(".active-half").length * 0.125,
+                day_total  = $("body").find(".active").length * 0.25 + $("body").find(".active-half").length * 0.125;
 
             // Updates task time total
-            $(parent).find(".task_total").text(task_total);
+            $(parent).find(".task_total").text(intHourToStr(task_total));
 
             // Updates daily time total
-            $("#day_total").text(day_total);
+            $("#day_total").text(intHourToStr(day_total));
             storeData();
 
             // Updates CSV
@@ -230,7 +255,7 @@ $(document).ready(function() {
             $("tbody tr:not(#task_1)").remove();
             $(":input").val("").removeAttr("checked").removeClass(hv);
             $(".inc label").removeClass("active");
-            $(".task_total, #day_total").text("0");
+            $(".task_total, #day_total").text("00:00");
             delete localStorage.dtt;
             generateCSV();
             return false;

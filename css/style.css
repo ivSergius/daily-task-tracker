@@ -406,11 +406,20 @@ h1, h2, h3, h4, h5, h6 { font-weight: bold; }
  }
 
  .active {
-   background: #00d0f9;
-   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#62cdf5), to(#04afef)) !important;
-   background: -moz-linear-gradient(19% 75% 90deg, #04afef, #62cdf5) !important;
-   border: 1px solid #00a7e6 !important;
+   background: #00a7e6;
+   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#00a7e6), to(#005677)) !important;
+   background: -moz-linear-gradient(19% 75% 90deg, #005677, #00a7e6) !important;
+   border: 1px solid #005677 !important;
  }
+
+.active-half {
+    background: #00d0f9;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#62cdf5), to(#04afef)) !important;
+    background: -moz-linear-gradient(19% 75% 90deg, #04afef, #62cdf5) !important;
+    height: 70% !important;
+    border: 1px solid #00a7e6 !important;
+    margin: 3px 0px 3px 0px !important;
+}
 
  .delete_task {
    background: #00a7e6;
