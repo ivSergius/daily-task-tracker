@@ -1,0 +1,6 @@
+# Ignore these things...
+
+ref/
+publish/
+
+buildinfo.properties
