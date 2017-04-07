@@ -80,6 +80,8 @@ $(document).ready(function() {
         // This will be the html used for creating new rows
         rowHTML = $("#task_1").html();
         addUniqueIds(tr);
+        $(".task_total").text(intHourToStr(0));
+        $("#day_total").text(intHourToStr(0));
     }());
 
     // Get todays date
