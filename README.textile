@@ -1,7 +1,8 @@
 It's a copy of https://github.com/starzonmyarmz/daily-task-tracker/
 
 From original README by Daniel Marino:
-----
+
+
 h1. Browser Emergent Task Timer
 
 This is the _Daily Task Tracker_, an HTML5 Web App based on the printable "Emergent Task Timer":http://davidseah.com/blog/the-printable-ceo-iii-emergent-task-timing/ which is created by "David Seah":http://davidseah.com/.
