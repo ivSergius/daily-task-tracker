@@ -253,6 +253,17 @@ $(document).ready(function() {
 
     // Wipe out localStorage
     (function noSubmit() {
+        $("#clear_timing").click(function() {
+            $(":input").removeAttr("checked");
+            $(".inc label").removeClass("active");
+            $(".task_total, #day_total").text("00:00");
+            generateCSV();
+            return false;
+        });
+    }());
+
+    // Wipe out localStorage
+    (function noSubmit() {
         $("#clear_data").click(function() {
             $("tbody tr:not(#task_1)").remove();
             $(":input").val("").removeAttr("checked").removeClass(hv);
