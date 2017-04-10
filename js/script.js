@@ -15,6 +15,17 @@ $(document).ready(function() {
     increment = $(".increment"), tt = $(".task_title"),
     lastSelected;
 
+    function pad(num, size) {
+        var s = "000000000" + num;
+        return s.substr(s.length-size);
+    }
+
+
+    for (var i = 1; i <= 11; i++) {
+        $("#task_hour_"+i).text(pad(i+8,2)) ;
+    }
+
+
     // Adds Unique Ids to increments
     function addUniqueIds(el) {
       $(el).each(function() {
@@ -56,11 +67,6 @@ $(document).ready(function() {
             csvOut = csvOut + '"' + csvTrTitle + '"' + ", " + csvTrTotal + "\n";
         });
         $("#download_csv").attr("href", "export.php?data=" + encodeURIComponent(csvOut));
-    }
-
-    function pad(num, size) {
-        var s = "000000000" + num;
-        return s.substr(s.length-size);
     }
 
     function intHourToStr(intHour) {
