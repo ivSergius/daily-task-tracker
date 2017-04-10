@@ -269,11 +269,18 @@ h1, h2, h3, h4, h5, h6 { font-weight: bold; }
    border: 1px solid #12c400;
  }
 
+ #clear_timing {
+     background: #a9a9a9;
+     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a9a9a9), to(#675a6a));
+     background: -moz-linear-gradient(100% 100% 90deg, #675a6a, #a9a9a9);
+     border: 1px solid #675a6a;
+ }
+
  #clear_data {
-   background: #bbb;
-   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#c8c8c8), to(#a9a9a9));
-   background: -moz-linear-gradient(100% 100% 90deg, #a9a9a9, #c8c8c8);
-   border: 1px solid #a4a4a4;
+   background: #a9a9a9;
+   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a9a9a9), to(#675a6a));
+   background: -moz-linear-gradient(100% 100% 90deg, #675a6a, #a9a9a9);
+   border: 1px solid #675a6a;
  }
 
 
