@@ -1,4 +1,4 @@
-/*
+﻿/*
  *
  * Title:   Daily Task Tracker
  * Author:  Daniel Marino
@@ -262,7 +262,10 @@ $(document).ready(function() {
         $("#clear_timing").click(function() {
             $(":input").removeAttr("checked");
             $(".inc label").removeClass("active");
+            $(".inc label").removeClass("active-half");
             $(".task_total, #day_total").text("00:00");
+            delete localStorage.dtt;
+            storeData();
             generateCSV();
             return false;
         });
