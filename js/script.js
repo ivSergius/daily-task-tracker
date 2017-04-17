@@ -290,6 +290,7 @@ $(document).ready(function() {
             $("tbody tr:not(#task_1)").remove();
             $(":input").val("").removeAttr("checked").removeClass(hv);
             $(".inc label").removeClass("active");
+            $(".inc label").removeClass("active-half");
             $(".task_total, #day_total").text("00:00");
             delete localStorage.dtt;
             generateCSV();
