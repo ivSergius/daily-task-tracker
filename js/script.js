@@ -257,6 +257,19 @@ $(document).ready(function() {
         });
     }());
 
+//    (function addHour() {
+//        $("#add_hour").click(function() {
+//            $("#task_amount").before('<th id="task_hour_'+($("#tasks thead th").length-1)+'">00</th>');
+//
+//
+////            var theId = $("#tasks tbody tr").length + 1;
+////            $("tbody").append('<tr id="task_' + theId + '">' + rowHTML + '</tr>');
+////            var tr = $("#task_" + theId + " .title, #task_" + theId + " .inc");
+////            addUniqueIds(tr);
+////            $(".task_title:last-child").focus();
+//        });
+//    }());
+
     // Wipe out localStorage
     (function noSubmit() {
         $("#clear_timing").click(function() {

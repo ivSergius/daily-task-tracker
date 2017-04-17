@@ -255,7 +255,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: bold; }
    opacity: 1;
  }
 
- #add_task {
+ #add_task, #add_hour {
    background: #00de36;
    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#5fd053), to(#18cb05));
    background: -moz-linear-gradient(100% 100% 90deg, #18cb05, #5fd053);
@@ -269,14 +269,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: bold; }
    border: 1px solid #12c400;
  }
 
- #clear_timing {
-     background: #a9a9a9;
-     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a9a9a9), to(#675a6a));
-     background: -moz-linear-gradient(100% 100% 90deg, #675a6a, #a9a9a9);
-     border: 1px solid #675a6a;
- }
-
- #clear_data {
+ #clear_data,  #clear_timing  {
    background: #a9a9a9;
    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a9a9a9), to(#675a6a));
    background: -moz-linear-gradient(100% 100% 90deg, #675a6a, #a9a9a9);
