@@ -21,8 +21,8 @@ $(document).ready(function() {
     }
 
 
-    for (var i = 1; i <= 11; i++) {
-        $("#task_hour_"+i).text(pad(i+8,2)) ;
+    for (var i = 1; i <= 12; i++) {
+        $("#task_hour_"+i).text(pad(i + 7, 2)) ;
     }
 
 
@@ -77,7 +77,7 @@ $(document).ready(function() {
     (function createFirstRow() {
         var td = increment.html(), html = "";
         // We need to create at least one row
-        for (var i = 1; i < 12; i++) {
+        for (var i = 0; i < 12; i++) {
             html += '<td id="tc_' + i + '" class="t_inc">' + td + '</td>';
         }
         increment.replaceWith(html);
