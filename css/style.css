@@ -269,7 +269,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: bold; }
    border: 1px solid #12c400;
  }
 
- #clear_data,  #clear_timing  {
+ #clear_data,  #clear_timing, #send_data  {
    background: #a9a9a9;
    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a9a9a9), to(#675a6a));
    background: -moz-linear-gradient(100% 100% 90deg, #675a6a, #a9a9a9);
@@ -676,7 +676,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: bold; }
   }
 
   .inc label,
-  #add_task, #clear_data, #init_hour {
+  #add_task, #clear_data, #init_hour, #send_data {
     display: none;
   }
 
