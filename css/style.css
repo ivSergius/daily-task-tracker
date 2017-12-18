@@ -276,6 +276,13 @@ h1, h2, h3, h4, h5, h6 { font-weight: bold; }
    border: 1px solid #675a6a;
  }
 
+ #init_hour  {
+   background: #3600de;
+   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#3600de), to(#3000c7));
+   background: -moz-linear-gradient(100% 100% 90deg, #150058, #3600de);
+   border: 1px solid #150058;
+ }
+
 
  /* Tables
  ----------------------------------------------------------------------------------------------------*/
@@ -669,7 +676,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: bold; }
   }
 
   .inc label,
-  #add_task, #clear_data {
+  #add_task, #clear_data, #init_hour {
     display: none;
   }
 

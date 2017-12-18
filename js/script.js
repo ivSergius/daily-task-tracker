@@ -298,6 +298,22 @@ $(document).ready(function() {
         });
     }());
 
+    // Wipe out localStorage
+    (function noSubmit() {
+        $("#init_hour").click(function() {
+            var initHour = new Date().getHours();
+            var hr;
+            for (var i = 1; i <= 12; i++) {
+                hr = i + initHour - 1;
+                if (hr>23) { hr = hr - 24;}
+                $("#task_hour_"+i).text(pad(hr, 2)) ;
+            }
+
+            return false;
+        });
+    }());
+
+
     // Return false if form is somehow submitted
     (function noSubmit() {
         $("form").submit(function() {
