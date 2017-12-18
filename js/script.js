@@ -154,6 +154,12 @@ $(document).ready(function() {
             // Load CSV Content
             generateCSV();
         }
+        if (localStorage.dtt_ih) {
+            var jsonData = JSON.parse(localStorage.dtt_ih);
+            var initHour = jsonData.init_hour;
+            showInitHour(initHour);
+        }
+
     }());
 
     // Actions taking place when increment box is checked/unchecked
@@ -187,7 +193,7 @@ $(document).ready(function() {
             checkOrUncheck(thisLabel, thisInput);
 
             var parent     = $(this).parents("tr"),
-                task_total = parent.find(".active").length * 0.25 + parent.find(".active-half").length * 0.125,
+                task_total =    parent.find(".active").length * 0.25 +    parent.find(".active-half").length * 0.125,
                 day_total  = $("body").find(".active").length * 0.25 + $("body").find(".active-half").length * 0.125;
 
             // Updates task time total
@@ -299,16 +305,23 @@ $(document).ready(function() {
     }());
 
     // Wipe out localStorage
+    function showInitHour(aInitHour) {
+        var hr;
+        for (var i = 1; i <= 12; i++) {
+            hr = i + aInitHour - 1;
+            if (hr>23) { hr = hr - 24;}
+            $("#task_hour_"+i).text(pad(hr, 2)) ;
+        }
+    }
+
+
+    // Wipe out localStorage
     (function noSubmit() {
         $("#init_hour").click(function() {
             var initHour = new Date().getHours();
-            var hr;
-            for (var i = 1; i <= 12; i++) {
-                hr = i + initHour - 1;
-                if (hr>23) { hr = hr - 24;}
-                $("#task_hour_"+i).text(pad(hr, 2)) ;
-            }
-
+            showInitHour(initHour);
+            delete localStorage.dtt_ih;
+            localStorage.dtt_ih = JSON.stringify({ "init_hour" : initHour });
             return false;
         });
     }());
