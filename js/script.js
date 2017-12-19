@@ -329,14 +329,16 @@ $(document).ready(function() {
     (function noSubmit() {
         $("#send_data").click(function() {
             var ld = JSON.parse(localStorage.dtt);
-            var jd = [{"name":"POS_PLSQL_URI","value":"dtt.save"}];
-            jd = jd.concat( ld.filter((e)=>'rows' in e)
-                                .map(c => ({"name":"rows","value":c.rows})) );
-            jd = jd.concat( ld.filter((e)=>!('rows' in e))
-                              .map(c => ({"name":"field","value":c.name+":"+c.value})) );
+            var aa = JSON.parse(localStorage.dtt_ih);
+            var data = [{"name":"POS_PLSQL_URI","value":"dtt.save"}];
+            data = data.concat( [{"name":"ihour","value":aa.init_hour}] );
+            data = data.concat( ld.filter((e)=>'rows' in e)
+                                      .map(c => ({"name":"rows","value":c.rows})) );
+            data = data.concat( ld.filter((e)=>!('rows' in e))
+                                      .map(c => ({"name":"field","value":c.name+":"+c.value})) );
 
             $.post("http://localhost:8080/POS/POS_PLSQL",
-                jd,
+                data,
                 function(data, status){
                     alert("Data: " + data + "\nStatus: " + status);
                 }
