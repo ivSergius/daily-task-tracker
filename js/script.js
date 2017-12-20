@@ -100,7 +100,7 @@ $(document).ready(function() {
             months  = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"],
             theDotw = theDate.getDay(),
             dotw    = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
-            day;
+            day = d;
         if (d < 10) {
             day = "0" + d;
         }
@@ -110,6 +110,9 @@ $(document).ready(function() {
         $("#today time")
             .attr("datetime", y + "-" + month + "-" + day)
             .text(dotw[theDotw] + ", " + d + " " + months[m] + " " + y);
+        delete localStorage.dtt_dt;
+        localStorage.dtt_dt = JSON.stringify({ "today" : day + "." + month + "." + y });
+
     }());
 
     // Load data from localStorage if record exists
@@ -304,7 +307,6 @@ $(document).ready(function() {
         });
     }());
 
-    // Wipe out localStorage
     function showInitHour(aInitHour) {
         var hr;
         for (var i = 1; i <= 12; i++) {
@@ -330,14 +332,16 @@ $(document).ready(function() {
         $("#send_data").click(function() {
             var ld = JSON.parse(localStorage.dtt);
             var aa = JSON.parse(localStorage.dtt_ih);
+            var dt = JSON.parse(localStorage.dtt_dt);
             var data = [{"name":"POS_PLSQL_URI","value":"dtt.save"}];
             data = data.concat( [{"name":"ihour","value":aa.init_hour}] );
-            data = data.concat( ld.filter((e)=>'rows' in e)
+            data = data.concat( [{"name":"today","value":dt.today}] );
+                        data = data.concat( ld.filter((e)=>'rows' in e)
                                       .map(c => ({"name":"rows","value":c.rows})) );
             data = data.concat( ld.filter((e)=>!('rows' in e))
                                       .map(c => ({"name":"field","value":c.name+":"+c.value})) );
 
-            $.post("http://localhost:8080/POS/POS_PLSQL",
+            $.post("//localhost:8080/POS/POS_PLSQL",
                 data,
                 function(data, status){
                     alert("Data: " + data + "\nStatus: " + status);
