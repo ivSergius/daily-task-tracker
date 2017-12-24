@@ -229,6 +229,44 @@ $(document).ready(function() {
         });
     }());
 
+
+
+    function add12HourRow() {
+
+        function getInitialHour(){
+            if (localStorage.dtt_ih) {
+                var jsonData = JSON.parse(localStorage.dtt_ih);
+                var initHour = jsonData.init_hour;
+                return initHour;
+            }
+            else return 8;
+        }
+
+        function title12hour() {
+            var html = "";
+            html += '<tr class="tasks_title title12hour">\r\n';
+            html += '<th class="title"><div>Следующая половина суток</div></th>\r\n';
+            var initHour = getInitialHour();
+            for (var i = 12; i < 24; i++) {
+                var hh = initHour + i;
+                if (hh>23) {hh = hh - 24;}
+                html +=
+                '<td id="task_hour_'+i+'" class="t_inc2">'+pad(hh, 2)+':00</td>\r\n';
+            }
+            html += '<td id="task_amount">Всего</td>\r\n';
+            html += '</tr>\r\n';
+            return html;
+        }
+        var t_html = title12hour();
+        $("tbody").append(t_html);
+    }
+    // Add 12 HOUR HEADER
+    (function add12Hour() {
+        $("#add_12hour").click(function() {
+            add12HourRow();
+        });
+    }());
+
     // Delete a task
     (function deleteTask() {
         $(".delete_task").live("click", function() {
@@ -339,7 +377,7 @@ $(document).ready(function() {
                         data = data.concat( ld.filter((e)=>'rows' in e)
                                       .map(c => ({"name":"rows","value":c.rows})) );
             data = data.concat( ld.filter((e)=>!('rows' in e))
-                                      .map(c => ({"name":"field","value":c.name+":"+c.value})) );
+                                      .map(c => ({"name":"field","value": encodeURIComponent(c.name+":"+c.value)})) );
 
             $.post("//localhost:8080/POS/POS_PLSQL",
                 data,

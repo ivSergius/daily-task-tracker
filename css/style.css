@@ -255,7 +255,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: bold; }
    opacity: 1;
  }
 
- #add_task, #add_hour {
+ #add_task, #add_12hour, #add_hour {
    background: #00de36;
    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#5fd053), to(#18cb05));
    background: -moz-linear-gradient(100% 100% 90deg, #18cb05, #5fd053);
@@ -342,6 +342,8 @@ h1, h2, h3, h4, h5, h6 { font-weight: bold; }
  .title label {
    display: none;
  }
+ .title12hour th div, .title12hour td
+ { font-weight: bold !important; }
 
  .task_title {
    background: -webkit-gradient(linear, 0% 0%, 0% 10%, from(#c3c3c3), to(#fff));
@@ -676,7 +678,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: bold; }
   }
 
   .inc label,
-  #add_task, #clear_data, #init_hour, #send_data {
+  #add_task, #add_12hour, #clear_data, #init_hour, #send_data {
     display: none;
   }
 
