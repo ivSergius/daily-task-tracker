@@ -50,8 +50,14 @@ $(document).ready(function() {
 
     // Store data via localStorage
     function storeData() {
+        var hour12field = getLocalStorage_dtt_12h();
+        var num_rows = $("tbody tr").length;
+        if (hour12field!=0) {
+            num_rows -= 1;
+        }
+
         var data = $("#tasks_form").serializeArray(),
-            rows = { "rows" : $("tbody tr").length };
+            rows = { "rows" : num_rows };
         data.unshift(rows);
         localStorage.dtt = JSON.stringify(data);
         return false;
@@ -115,8 +121,57 @@ $(document).ready(function() {
 
     }());
 
+
+    function add12HourRow() {
+
+
+
+        var numTask12hour = num;
+        var t_html = title12hour();
+        $("tbody").append(t_html);
+        localStorage.dtt_12h = JSON.stringify({ "hour12field" : 'field_'+numTask12hour });
+    }
+
+    function getLocalStorage_dtt_12h (){
+        var hour12field = 0;
+        if (localStorage.dtt_12h) {
+            var jsonData = JSON.parse(localStorage.dtt_12h);
+            hour12field = jsonData.hour12field;
+        }
+        return hour12field;
+    }
+
+
+    function getInitialHour(){
+        if (localStorage.dtt_ih) {
+            var jsonData = JSON.parse(localStorage.dtt_ih);
+            var initHour = jsonData.init_hour;
+            return initHour;
+        }
+        else return 8;
+    }
+
+    function title12hour() {
+        var html = "";
+        html += '<tr class="title12hour">\r\n';
+        html += '<th class="title">'+'<div>Следующая половина суток</div></th>\r\n';
+        var initHour = getInitialHour();
+        for (var i = 12; i < 24; i++) {
+            var hh = initHour + i;
+            if (hh>23) {hh = hh - 24;}
+            html +=
+            '<td id="task_hour_'+i+'" class="t_inc2">'+pad(hh, 2)+':00</td>\r\n';
+        }
+        html += '<td id="task_amount">Всего</td>\r\n';
+        html += '</tr>\r\n';
+        return html;
+    }
+
     // Load data from localStorage if record exists
     (function loadData() {
+        var hour12field = getLocalStorage_dtt_12h();
+
+
         if (localStorage.dtt) {
             var jsonData = JSON.parse(localStorage.dtt),
                 numRows  = jsonData[0].rows;
@@ -130,6 +185,12 @@ $(document).ready(function() {
             for (var i = 0; i < jsonData.length; i++) {
                 var el = $("#" + jsonData[i].name);
                 if (el.is("textarea")) {
+                    if ((hour12field!=0)&&(hour12field==jsonData[i].name)){
+                     // print next 12 hour title
+                      var t_html = title12hour();
+                      el.parent().parent().parent().before(t_html);
+                      //$("tbody").append(t_html);
+                    }
                     if (jsonData[i].value) {
                         el.text(jsonData[i].value);
                         el.addClass(hv);
@@ -161,6 +222,9 @@ $(document).ready(function() {
             var jsonData = JSON.parse(localStorage.dtt_ih);
             var initHour = jsonData.init_hour;
             showInitHour(initHour);
+        } else {
+          var init_hour_default = 8;
+          localStorage.dtt_ih = JSON.stringify({ "init_hour" : init_hour_default });
         }
 
     }());
@@ -231,35 +295,7 @@ $(document).ready(function() {
 
 
 
-    function add12HourRow() {
 
-        function getInitialHour(){
-            if (localStorage.dtt_ih) {
-                var jsonData = JSON.parse(localStorage.dtt_ih);
-                var initHour = jsonData.init_hour;
-                return initHour;
-            }
-            else return 8;
-        }
-
-        function title12hour() {
-            var html = "";
-            html += '<tr class="tasks_title title12hour">\r\n';
-            html += '<th class="title"><div>Следующая половина суток</div></th>\r\n';
-            var initHour = getInitialHour();
-            for (var i = 12; i < 24; i++) {
-                var hh = initHour + i;
-                if (hh>23) {hh = hh - 24;}
-                html +=
-                '<td id="task_hour_'+i+'" class="t_inc2">'+pad(hh, 2)+':00</td>\r\n';
-            }
-            html += '<td id="task_amount">Всего</td>\r\n';
-            html += '</tr>\r\n';
-            return html;
-        }
-        var t_html = title12hour();
-        $("tbody").append(t_html);
-    }
     // Add 12 HOUR HEADER
     (function add12Hour() {
         $("#add_12hour").click(function() {
@@ -368,12 +404,14 @@ $(document).ready(function() {
 
     (function noSubmit() {
         $("#send_data").click(function() {
-            var ld = JSON.parse(localStorage.dtt);
-            var aa = JSON.parse(localStorage.dtt_ih);
-            var dt = JSON.parse(localStorage.dtt_dt);
+            var ld  = JSON.parse(localStorage.dtt);
+            var aa  = JSON.parse(localStorage.dtt_ih);
+            var dt  = JSON.parse(localStorage.dtt_dt);
+            var h12 = JSON.parse(localStorage.dtt_12h);
             var data = [{"name":"POS_PLSQL_URI","value":"dtt.save"}];
-            data = data.concat( [{"name":"ihour","value":aa.init_hour}] );
-            data = data.concat( [{"name":"today","value":dt.today}] );
+            data = data.concat( [{"name":"ihour",     "value":aa.init_hour}] );
+            data = data.concat( [{"name":"task12hour","value":'field_'+h12.hour12field}] );
+            data = data.concat( [{"name":"today",     "value":dt.today}] );
                         data = data.concat( ld.filter((e)=>'rows' in e)
                                       .map(c => ({"name":"rows","value":c.rows})) );
             data = data.concat( ld.filter((e)=>!('rows' in e))
