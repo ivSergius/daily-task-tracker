@@ -410,7 +410,7 @@ $(document).ready(function() {
             var h12 = JSON.parse(localStorage.dtt_12h);
             var data = [{"name":"POS_PLSQL_URI","value":"dtt.save"}];
             data = data.concat( [{"name":"ihour",     "value":aa.init_hour}] );
-            data = data.concat( [{"name":"task12hour","value":'field_'+h12.hour12field}] );
+            data = data.concat( [{"name":"task12hour","value":h12.hour12field}] );
             data = data.concat( [{"name":"today",     "value":dt.today}] );
                         data = data.concat( ld.filter((e)=>'rows' in e)
                                       .map(c => ({"name":"rows","value":c.rows})) );
