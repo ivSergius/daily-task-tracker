@@ -377,7 +377,7 @@ $(document).ready(function() {
                         data = data.concat( ld.filter((e)=>'rows' in e)
                                       .map(c => ({"name":"rows","value":c.rows})) );
             data = data.concat( ld.filter((e)=>!('rows' in e))
-                                      .map(c => ({"name":"field","value": encodeURIComponent(c.name+":"+c.value)})) );
+                                      .map(c => ({"name":"field","value":c.name+":"+c.value})) );
 
             $.post("//localhost:8080/POS/POS_PLSQL",
                 data,
